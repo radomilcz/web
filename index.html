@@ -89,6 +89,13 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
   fill:var(--print);overflow:visible;--r:60deg;
   transform:rotate(var(--r)) scale(1.08);animation:tisk 1.8s cubic-bezier(.2,.7,.2,1) .2s forwards;
 }
+/* na mobilu je otisk jemnější a posunutý nahoru za BRZY – drobné písmo dole na něm nesedí */
+@media (max-width:600px){
+  .otisk{
+    --print:color-mix(in srgb,var(--ink) 11%,transparent);
+    width:560px;right:-62%;top:-6%;margin-top:0;
+  }
+}
 @keyframes tisk{to{opacity:1;transform:rotate(calc(var(--r) + 2deg))}}
 .pozadi{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 

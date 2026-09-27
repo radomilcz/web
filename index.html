@@ -164,6 +164,15 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .kontakt a{border-bottom:.08em solid currentColor;overflow-wrap:anywhere}
 .kontakt a:hover{border-bottom-color:transparent}
 
+/* na mobilu jde všechno pod sebe: kontakt, setkání, adresa – kdy, hned nad tím kde */
+@media (max-width:600px){
+  .foot{flex-direction:column;align-items:flex-start;gap:1rem}
+  .kontakty{display:contents}
+  .kontakt:first-child{order:1}
+  .setkani{order:2;flex-basis:auto;margin-bottom:-.55rem}
+  .kontakt+.kontakt{order:3}
+}
+
 .rise{opacity:0;transform:translateY(.6em);animation:vynor 1s var(--ease) forwards}
 .sub.rise{animation-delay:.55s}
 .odkazy .rise:nth-child(1){animation-delay:.75s}

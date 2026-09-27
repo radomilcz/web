@@ -5,8 +5,9 @@
    by v půlce prolnutí srovnal jas textu a pozadí a text by na chvíli zmizel.
 
    Barvy drží :root[data-paleta]; skript jen přepíná ten atribut a volbu si pamatuje
-   v localStorage ('samy' = střídat). Běží v hlavičce, aby se uložená paleta nasadila ještě
-   před vykreslením a stránka neproblikla výchozími barvami. Když localStorage není
+   v localStorage ('samy' = střídat, přepíná ho vypínač Střídání barev v nabídce). Běží
+   v hlavičce, aby se uložená paleta nasadila ještě před vykreslením a stránka
+   neproblikla výchozími barvami. Když localStorage není
    (soukromé okno, zakázaná data), přepínání funguje dál, jen si volbu stránka nezapamatuje.
    Kdo má v systému omezený pohyb, tomu se pastva sama nepřebarvuje. */
 (function () {
@@ -101,17 +102,24 @@
       });
     });
 
-    samy.addEventListener('click', function () {
-      /* ze světlé palety se do střídání vstoupí rovnou první tmavou */
-      if (STRIDANI.indexOf(koren.dataset.paleta || STRIDANI[0]) < 0) {
-        koren.dataset.paleta = STRIDANI[0];
-        prohlizecPoProlnuti();
+    /* Střídání barev je vypínač: nabídka zůstane otevřená, ať je vidět, kam se přepnul */
+    samy.addEventListener('click', function (udalost) {
+      udalost.stopPropagation();
+      if (koren.classList.contains('stridani')) {
+        /* vypnuto – pastva zůstane v barvě, ve které právě je */
+        koren.classList.remove('stridani');
+        koren.dataset.paleta = koren.dataset.paleta || STRIDANI[0];
+        uloz(koren.dataset.paleta);
+      } else {
+        /* ze světlé palety se do střídání vstoupí rovnou první tmavou */
+        if (STRIDANI.indexOf(koren.dataset.paleta || STRIDANI[0]) < 0) {
+          koren.dataset.paleta = STRIDANI[0];
+          prohlizecPoProlnuti();
+        }
+        koren.classList.add('stridani');
+        uloz(SAMY);
       }
-      koren.classList.add('stridani');
-      uloz(SAMY);
       oznac();
-      zavri();
-      prepinac.focus();
     });
 
     document.addEventListener('click', function (udalost) {

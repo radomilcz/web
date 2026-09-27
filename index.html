@@ -34,13 +34,17 @@
 @font-face{font-family:"Agrandir";src:url(/assets/fonts/Agrandir-Regular.woff) format("woff");font-weight:400;font-display:swap}
 @font-face{font-family:"Agrandir Narrow Black";src:url(/assets/fonts/Agrandir-NarrowBlack.woff) format("woff");font-weight:900;font-display:swap}
 @font-face{font-family:"Agrandir Grand";src:url(/assets/fonts/Agrandir-Grand.woff) format("woff");font-weight:400;font-display:swap}
+/* Barvy pastvy se samy střídají (assets/paleta.js) – registrované barvy jde plynule prolnout. */
+@property --ground{syntax:"<color>";inherits:true;initial-value:#3b2f2f}
+@property --ink{syntax:"<color>";inherits:true;initial-value:#e6acac}
 :root{
+  --takt:12s;          /* jak dlouho vydrží jedna barva, než se pastva přebarví */
+  transition:--ground 2.5s ease,--ink 2.5s ease;
   /* Výchozí paleta; ostatní přepíná :root[data-paleta] níž (terč v rohu stránky).
-     --ink-rgb je ta samá barva po složkách – otisk a linky z ní berou průhlednost. */
+     Průhledné plochy (otisk, linky) se míchají z --ink přes color-mix, takže plynou s ní. */
   --ground:#3b2f2f;
   --ink:#e6acac;
-  --ink-rgb:230,172,172;
-  --print:rgba(var(--ink-rgb),.2);
+  --print:color-mix(in srgb,var(--ink) 20%,transparent);
   --display:"Agrandir Grand Heavy",system-ui,sans-serif;
   --body:"Agrandir",system-ui,sans-serif;
   --narrow:"Agrandir Narrow Black",system-ui,sans-serif;
@@ -50,23 +54,23 @@
   color-scheme:dark;
 }
 /* Hlína a růžová */
-:root[data-paleta="hlina-ruzova"]{--ground:#3b2f2f;--ink:#e6acac;--ink-rgb:230,172,172;color-scheme:dark}
+:root[data-paleta="hlina-ruzova"]{--ground:#3b2f2f;--ink:#e6acac;color-scheme:dark}
 /* Růžová a hlína */
-:root[data-paleta="ruzova-hlina"]{--ground:#e6acac;--ink:#3b2f2f;--ink-rgb:59,47,47;color-scheme:light}
+:root[data-paleta="ruzova-hlina"]{--ground:#e6acac;--ink:#3b2f2f;color-scheme:light}
 /* Zelená a krém */
-:root[data-paleta="zelena-krem"]{--ground:#498660;--ink:#f9e7dd;--ink-rgb:249,231,221;color-scheme:light}
+:root[data-paleta="zelena-krem"]{--ground:#498660;--ink:#f9e7dd;color-scheme:light}
 /* Krém a zelená */
-:root[data-paleta="krem-zelena"]{--ground:#f9e7dd;--ink:#498660;--ink-rgb:73,134,96;color-scheme:light}
+:root[data-paleta="krem-zelena"]{--ground:#f9e7dd;--ink:#498660;color-scheme:light}
 /* Modrá a krém */
-:root[data-paleta="modra-krem"]{--ground:#464994;--ink:#f9e7dd;--ink-rgb:249,231,221;color-scheme:dark}
+:root[data-paleta="modra-krem"]{--ground:#464994;--ink:#f9e7dd;color-scheme:dark}
 /* Krém a modrá */
-:root[data-paleta="krem-modra"]{--ground:#f9e7dd;--ink:#464994;--ink-rgb:70,73,148;color-scheme:light}
+:root[data-paleta="krem-modra"]{--ground:#f9e7dd;--ink:#464994;color-scheme:light}
 /* Zelená a růžová */
-:root[data-paleta="zelena-ruzova"]{--ground:#498660;--ink:#e6acac;--ink-rgb:230,172,172;color-scheme:light}
+:root[data-paleta="zelena-ruzova"]{--ground:#498660;--ink:#e6acac;color-scheme:light}
 /* Růžová a modrá */
-:root[data-paleta="ruzova-modra"]{--ground:#e6acac;--ink:#464994;--ink-rgb:70,73,148;color-scheme:light}
+:root[data-paleta="ruzova-modra"]{--ground:#e6acac;--ink:#464994;color-scheme:light}
 /* Krém a hlína */
-:root[data-paleta="krem-hlina"]{--ground:#f9e7dd;--ink:#3b2f2f;--ink-rgb:59,47,47;color-scheme:light}
+:root[data-paleta="krem-hlina"]{--ground:#f9e7dd;--ink:#3b2f2f;color-scheme:light}
 *{box-sizing:border-box}
 html{background:var(--ground)}
 body{
@@ -106,27 +110,47 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
   display:grid;place-items:center;padding:0;border:0;background:none;
   font:inherit;color:inherit;cursor:pointer;line-height:0;
 }
-.paleta .prepinac .terc{height:var(--vyska);width:var(--vyska);box-shadow:inset 0 0 0 1px rgba(var(--ink-rgb),.35)}
+/* odpočet: kroužek kolem terče se za --takt obtočí dokola a pastva se přebarví.
+   Stojí, když je nad ním myš nebo otevřená nabídka; zmizí, když si někdo barvu vybere. */
+.prepinac{position:relative}
+.odpocet{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none;display:none}
+.odpocet circle{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:120.7;stroke-dashoffset:120.7}
+.stridani .odpocet{display:block}
+.stridani .odpocet circle{animation:odpocet var(--takt) linear infinite}
+.paleta:hover .odpocet circle,.paleta.otevrena .odpocet circle{animation-play-state:paused}
+@keyframes odpocet{to{stroke-dashoffset:0}}
+.paleta-menu .samy{
+  grid-column:1/-1;line-height:1.2;padding:.55em .2em .1em;margin-top:.1em;
+  border-top:1px solid color-mix(in srgb,var(--ink) 25%,transparent);font-size:.9em;
+}
+.paleta-menu .samy{display:block;text-align:center;white-space:nowrap}
+.paleta-menu .samy::before{
+  content:"";display:inline-block;width:.62em;height:.62em;margin-right:.45em;vertical-align:-.04em;
+  border-radius:50%;box-shadow:inset 0 0 0 1.5px currentColor;
+}
+.paleta-menu .samy[aria-checked="true"]::before{background:currentColor}
+.paleta-menu .samy:hover{text-decoration:underline}
+.paleta .prepinac .terc{height:var(--vyska);width:var(--vyska);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 35%,transparent)}
 .terc{
   display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;
-  background:var(--v,var(--ground));box-shadow:0 0 0 1.5px rgba(var(--ink-rgb),.55);
+  background:var(--v,var(--ground));box-shadow:0 0 0 1.5px color-mix(in srgb,var(--ink) 55%,transparent);
   transition:box-shadow .2s;
 }
 .terc::before{content:"";width:39%;height:39%;border-radius:50%;background:var(--s,var(--ink))}
 .paleta .prepinac:hover .terc,.paleta .prepinac:focus-visible .terc{
-  box-shadow:inset 0 0 0 1px rgba(var(--ink-rgb),.8),0 0 0 .28em rgba(var(--ink-rgb),.12);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ink) 80%,transparent),0 0 0 .28em color-mix(in srgb,var(--ink) 12%,transparent);
 }
 .paleta-menu{
   position:absolute;top:calc(100% + .6em);right:0;z-index:5;
   display:grid;grid-template-columns:repeat(3,auto);gap:.6em;padding:.75em;
   /* podklad je o chlup jinde než stránka – jinak terč v barvě pozadí splyne s deskou */
-  background:var(--ground) linear-gradient(rgba(var(--ink-rgb),.1),rgba(var(--ink-rgb),.1));
-  border:1px solid rgba(var(--ink-rgb),.35);border-radius:18px;
+  background:var(--ground) linear-gradient(color-mix(in srgb,var(--ink) 10%,transparent),color-mix(in srgb,var(--ink) 10%,transparent));
+  border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);border-radius:18px;
   box-shadow:0 14px 34px rgba(0,0,0,.28);
 }
 .paleta-menu[hidden]{display:none}
 .paleta-menu .terc{width:2.2em;height:2.2em}
-.paleta-menu button:hover .terc,.paleta-menu button:focus-visible .terc{box-shadow:0 0 0 2px rgba(var(--ink-rgb),.7)}
+.paleta-menu button:hover .terc,.paleta-menu button:focus-visible .terc{box-shadow:0 0 0 2px color-mix(in srgb,var(--ink) 70%,transparent)}
 .paleta-menu button[aria-checked="true"] .terc{box-shadow:0 0 0 2px var(--ink)}
 
 .stred{--brzy:clamp(3rem,min(31vw,30vh),24rem);align-self:center;display:flex;flex-direction:column;align-items:flex-start}
@@ -197,8 +221,8 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
   <header class="hlava">
     <p class="eyebrow">církev jako kráva</p>
     <div class="paleta">
-      <button class="prepinac" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Barvy stránky" title="Barvy stránky"><span class="terc"></span></button>
-      <div class="paleta-menu" role="menu" aria-label="Barvy stránky" hidden>
+      <button class="prepinac" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Barvy pastvy" title="Barvy pastvy"><span class="terc"></span><svg class="odpocet" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19.2"/></svg></button>
+      <div class="paleta-menu" role="menu" aria-label="Barvy pastvy" hidden>
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="hlina-ruzova" title="Hlína a růžová" aria-label="Hlína a růžová"><span class="terc" style="--v:#3b2f2f;--s:#e6acac"></span></button>
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="ruzova-hlina" title="Růžová a hlína" aria-label="Růžová a hlína"><span class="terc" style="--v:#e6acac;--s:#3b2f2f"></span></button>
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="zelena-krem" title="Zelená a krém" aria-label="Zelená a krém"><span class="terc" style="--v:#498660;--s:#f9e7dd"></span></button>
@@ -208,6 +232,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="zelena-ruzova" title="Zelená a růžová" aria-label="Zelená a růžová"><span class="terc" style="--v:#498660;--s:#e6acac"></span></button>
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="ruzova-modra" title="Růžová a modrá" aria-label="Růžová a modrá"><span class="terc" style="--v:#e6acac;--s:#464994"></span></button>
       <button type="button" role="menuitemradio" aria-checked="false" data-paleta="krem-hlina" title="Krém a hlína" aria-label="Krém a hlína"><span class="terc" style="--v:#f9e7dd;--s:#3b2f2f"></span></button>
+        <button class="samy" type="button" role="menuitemcheckbox" aria-checked="false">Střídat samy</button>
       </div>
     </div>
   </header>

@@ -197,6 +197,9 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .setkani .vtip{display:block;margin-top:.5em;font-family:var(--body);font-weight:400;font-size:clamp(1rem,1.55vw,1.875rem);line-height:1.3;letter-spacing:0}
 /* na úzkém displeji se setkání stejně zalomí pod kontakty – tam patří k levému okraji jako všechno ostatní */
 @media (max-width:900px){.setkani{flex-basis:100%;margin-left:0;text-align:left}}
+/* tiráž – drobně a tlumeně ve spodním okraji stránky, výšku nepřidává (na mobilu jde normálně pod patičku) */
+@media (min-width:601px){.page{padding-bottom:max(var(--pad),3.2rem)}}   /* místo pro tiráž i na užších obrazovkách */
+.tiraz{position:absolute;left:var(--pad);bottom:calc(var(--pad)*.3);margin:0;font-size:clamp(.72rem,.85vw,.95rem);line-height:1.4;color:color-mix(in srgb,var(--ink) 55%,transparent)}
 .kontakty{display:flex;flex-wrap:wrap;gap:1rem clamp(2rem,5vw,5rem)}
 .kontakt{margin:0;font-size:clamp(1rem,1.55vw,1.875rem);line-height:1.3}
 .kontakt a{border-bottom:.08em solid currentColor;overflow-wrap:anywhere}
@@ -210,6 +213,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
   .setkani .vtip{margin-top:.7rem}
   .kontakt+.kontakt{order:2}
   .kontakt:first-child{order:3}
+  .tiraz{position:static}
 }
 
 .rise{opacity:0;transform:translateY(.6em);animation:vynor 1s var(--ease) forwards}
@@ -217,6 +221,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .odkazy .rise:nth-child(1){animation-delay:.75s}
 .odkazy .rise:nth-child(2){animation-delay:.85s}
 .foot.rise{animation-delay:1s}
+.tiraz.rise{animation-delay:1.1s}
 @keyframes vynor{to{opacity:1;transform:none}}
 
 @media (prefers-reduced-motion:reduce){
@@ -268,6 +273,8 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
     </div>
     <p class="setkani">Setkání na pastvě<br>každou neděli v&nbsp;10.00<span class="vtip">Rádi tě poznáme. I když se cítíš jako dobytek.</span></p>
   </footer>
+
+  <p class="tiraz rise">© 2026 – Apoštolská církev, sbor Nový Jičín, IČO&nbsp;17627681</p>
 
 </div>
 </body>

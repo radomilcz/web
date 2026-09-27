@@ -13,7 +13,7 @@ jako na otázkách na tělo (pravidla `:root[data-paleta]` v `index.html`, přep
 Tady se pastva přebarvuje i sama: dokud si návštěvník barvu nevybere, střídají se každých 12 s
 (`--takt` v `index.html`) tři tmavé palety – hlína, modrá, zelená – a kroužek kolem terče odpočítává
 do další. Jen tmavé, protože přechod mezi tmavým a světlým pozadím by v půlce prolnutí srovnal jas
-textu a pozadí. Výběr barvy střídání zastaví, vypínač „Střídání barev“ v nabídce ho zase pustí. S omezeným
+textu a pozadí. Výběr barvy střídání zastaví, vypínač „Kráva mění barvy“ v nabídce ho zase pustí. S omezeným
 pohybem v systému se nestřídá nic.
 
 ## Struktura

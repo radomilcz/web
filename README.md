@@ -10,18 +10,19 @@ Sourozenec repozitářů `cirkevjakokrava` (manifest) a `otazky` – stejné bar
 písmo Agrandir i otisk z Figmy. Terč v pravém horním rohu („Kráva mění barvy“) přepíná barvy pastvy – stejných devět palet
 jako na otázkách na tělo (pravidla `:root[data-paleta]` v `index.html`, přepínání v `assets/paleta.js`).
 
-Tady se pastva přebarvuje i sama: dokud si návštěvník barvu nevybere, střídají se každých 12 s
-(`--takt` v `index.html`) tři tmavé palety – hlína, modrá, zelená – a kroužek kolem terče odpočítává
-do další. Jen tmavé, protože přechod mezi tmavým a světlým pozadím by v půlce prolnutí srovnal jas
-textu a pozadí. Výběr barvy střídání zastaví, vypínač „Střídání barev“ v nabídce ho zase pustí. S omezeným
-pohybem v systému se nestřídá nic.
+Tady se pastva přebarvuje i sama: každá návštěva začíná se zapnutým střídáním – každých 12 s
+(`--takt` v `index.html`) se prolnou tři tmavé palety – hlína, modrá, zelená – a kroužek kolem terče
+odpočítává do další. Jen tmavé, protože přechod mezi tmavým a světlým pozadím by v půlce prolnutí
+srovnal jas textu a pozadí. Výběr barvy střídání zastaví, vypínač „Střídání barev“ v nabídce ho zase
+pustí; volbu si stránka pamatuje jen do zavření okna (sessionStorage). S omezeným pohybem v systému
+se nestřídá, dokud si ho návštěvník sám nezapne.
 
 ## Struktura
 
 ```
 index.html              celá stránka i s otiskem, styly jsou uvnitř – žádný build
 CNAME                   cirkevjakokrava.cz
-assets/paleta.js        barvy pastvy – volba z otázek na tělo + samovolné střídání, volbu si pamatuje v localStorage
+assets/paleta.js        barvy pastvy – volba z otázek na tělo + samovolné střídání, volbu si pamatuje do zavření okna
 assets/fonts/*.woff     Agrandir – subset (latinka, čeština, šipka)
 assets/favicon.svg      ikona webu (+ favicon-32.png, icon-180.png) – převzaté z manifestu
 assets/og.jpg           náhled při sdílení odkazu (1200×630, vyfocená stránka)

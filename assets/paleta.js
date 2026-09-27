@@ -4,21 +4,23 @@
    kolem terče odpočítává do další. Tmavé proto, že přechod mezi tmavým a světlým pozadím
    by v půlce prolnutí srovnal jas textu a pozadí a text by na chvíli zmizel.
 
-   Barvy drží :root[data-paleta]; skript jen přepíná ten atribut a volbu si pamatuje
-   v localStorage ('samy' = střídat, přepíná ho vypínač Střídání barev v nabídce). Běží
-   v hlavičce, aby se uložená paleta nasadila ještě před vykreslením a stránka
-   neproblikla výchozími barvami. Když localStorage není
-   (soukromé okno, zakázaná data), přepínání funguje dál, jen si volbu stránka nezapamatuje.
-   Kdo má v systému omezený pohyb, tomu se pastva sama nepřebarvuje. */
+   Barvy drží :root[data-paleta]; skript jen přepíná ten atribut. Vybranou barvu si pamatuje
+   jen do zavření okna (sessionStorage) – každá nová návštěva začne se zapnutým střídáním.
+   Běží v hlavičce, aby se paleta nasadila ještě před vykreslením a stránka při přechodu
+   z odkazu na odkaz neproblikla výchozími barvami. Když sessionStorage není (zakázaná data),
+   přepínání funguje dál, jen si volbu stránka nezapamatuje.
+   Kdo má v systému omezený pohyb, tomu se pastva sama nepřebarvuje, dokud si střídání
+   nezapne vypínačem. */
 (function () {
   var KLIC = 'web-paleta';
+  try { localStorage.removeItem(KLIC); } catch (chyba) { /* úklid po dřívější trvalé paměti */ }
   var SAMY = 'samy';
   var STRIDANI = ['hlina-ruzova', 'modra-krem', 'zelena-krem'];   // pořadí drží kontrast i v půlce prolnutí
   var koren = document.documentElement;
   var klid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function uloz(hodnota) {
-    try { localStorage.setItem(KLIC, hodnota); } catch (chyba) { /* bez paměti to taky jde */ }
+    try { sessionStorage.setItem(KLIC, hodnota); } catch (chyba) { /* bez paměti to taky jde */ }
   }
 
   function prohlizec() {
@@ -28,10 +30,10 @@
   }
 
   var ulozena = null;
-  try { ulozena = localStorage.getItem(KLIC); } catch (chyba) { /* viz výše */ }
+  try { ulozena = sessionStorage.getItem(KLIC); } catch (chyba) { /* viz výše */ }
   if (ulozena && ulozena !== SAMY) {
     koren.dataset.paleta = ulozena;
-  } else if (!klid) {
+  } else if (!klid || ulozena === SAMY) {
     koren.classList.add('stridani');
   }
 
@@ -46,7 +48,6 @@
     var volby = Array.prototype.slice.call(menu.querySelectorAll('button[data-paleta]'));
     var cekani;
 
-    if (klid) { samy.hidden = true; }
 
     function oznac() {
       var ted = koren.dataset.paleta || volby[0].dataset.paleta;

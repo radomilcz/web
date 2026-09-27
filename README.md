@@ -2,7 +2,7 @@
 
 Zatím jen přistávací stránka „BRZY“ s odkazy na [manifest](https://manifest.cirkevjakokrava.cz),
 [otázky na tělo](https://otazky.cirkevjakokrava.cz), kontaktem `ahoj@cirkevjakokrava.cz` a adresou
-komunitního prostoru v budově Monta.
+komunitního prostoru v budově Monta v Novém Jičíně.
 
 **Živě:** https://cirkevjakokrava.cz (GitHub Pages z kořene větve `main`)
 

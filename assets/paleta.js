@@ -5,7 +5,7 @@
    by v půlce prolnutí srovnal jas textu a pozadí a text by na chvíli zmizel.
 
    Barvy drží :root[data-paleta]; skript jen přepíná ten atribut a volbu si pamatuje
-   v localStorage ('samy' = střídat, přepíná ho vypínač Kráva mění barvy v nabídce). Běží
+   v localStorage ('samy' = střídat, přepíná ho vypínač Střídání barev v nabídce). Běží
    v hlavičce, aby se uložená paleta nasadila ještě před vykreslením a stránka
    neproblikla výchozími barvami. Když localStorage není
    (soukromé okno, zakázaná data), přepínání funguje dál, jen si volbu stránka nezapamatuje.
@@ -102,7 +102,7 @@
       });
     });
 
-    /* Kráva mění barvy je vypínač: nabídka zůstane otevřená, ať je vidět, kam se přepnul */
+    /* Střídání barev je vypínač: nabídka zůstane otevřená, ať je vidět, kam se přepnul */
     samy.addEventListener('click', function (udalost) {
       udalost.stopPropagation();
       if (koren.classList.contains('stridani')) {

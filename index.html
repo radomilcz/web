@@ -142,11 +142,12 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .sub{margin:.35em 0 0;font-family:var(--grand);font-size:clamp(1.25rem,3vw,3rem);line-height:1.1}
 
 .odkazy{list-style:none;margin:clamp(2rem,5vh,5rem) 0 0;padding:0;display:grid;gap:clamp(1.1rem,2.6vh,1.9rem);width:100%;max-width:60rem}
-.odkazy a{display:grid;grid-template-columns:auto 1fr;column-gap:.55em;align-items:baseline}
-.odkazy a::before{content:"→";grid-row:span 2;font-size:clamp(1.6rem,3.6vw,3.5rem);line-height:1;transition:transform .5s var(--ease)}
-.odkazy b{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,3.6vw,3.5rem);line-height:1.05;letter-spacing:-.01em}
+/* velikost nese odkaz, ať mezera i posun šipky počítají se stejným em – šipka jen přijede blíž, nedotkne se */
+.odkazy a{display:grid;grid-template-columns:auto 1fr;column-gap:.4em;align-items:baseline;font-size:clamp(1.6rem,3.6vw,3.5rem)}
+.odkazy a::before{content:"→";grid-row:span 2;line-height:1;transition:transform .5s var(--ease)}
+.odkazy b{font-family:var(--display);font-weight:800;line-height:1.05;letter-spacing:-.01em}
 .odkazy span{grid-column:2;font-size:clamp(1rem,1.5vw,1.5rem);line-height:1.3;opacity:.8;margin-top:.2em}
-.odkazy a:hover::before,.odkazy a:focus-visible::before{transform:translateX(.25em)}
+.odkazy a:hover::before,.odkazy a:focus-visible::before{transform:translateX(.15em)}
 .odkazy a:hover b,.odkazy a:focus-visible b{text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.14em}
 
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem 2rem;flex-wrap:wrap}

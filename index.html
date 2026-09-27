@@ -129,9 +129,9 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .paleta-menu button:hover .terc,.paleta-menu button:focus-visible .terc{box-shadow:0 0 0 2px rgba(var(--ink-rgb),.7)}
 .paleta-menu button[aria-checked="true"] .terc{box-shadow:0 0 0 2px var(--ink)}
 
-.stred{align-self:center;display:flex;flex-direction:column;align-items:flex-start}
+.stred{--brzy:clamp(3rem,min(31vw,30vh),24rem);align-self:center;display:flex;flex-direction:column;align-items:flex-start}
 .brzy{
-  margin:0;font-family:var(--narrow);font-weight:900;font-size:clamp(5.5rem,min(24vw,30vh),24rem);
+  margin:0;font-family:var(--narrow);font-weight:900;font-size:var(--brzy);
   line-height:.9;letter-spacing:0;overflow:hidden;padding-top:.04em;
 }
 .brzy i{display:inline-block;font-style:normal;transform:translateY(110%);animation:vyjet 1.2s var(--ease) forwards}
@@ -139,7 +139,12 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 .brzy i:nth-child(3){animation-delay:.14s}
 .brzy i:nth-child(4){animation-delay:.21s}
 @keyframes vyjet{to{transform:none}}
-.sub{margin:.35em 0 0;font-family:var(--grand);font-size:clamp(1.25rem,3vw,3rem);line-height:1.1}
+/* podtitul je přesně tak dlouhý jako BRZY – velikost se odvozuje z něj (poměr šířek obou řádků v Agrandiru).
+   Odsazení vlevo = volné místo před tahem písmene B, záporný okraj přitáhne řádek pod účaří BRZY. */
+.sub{
+  margin:calc(var(--brzy)*-.12) 0 0;padding-left:calc(var(--brzy)*.033);
+  font-family:var(--grand);font-size:calc(var(--brzy)*.1315);line-height:1.1;white-space:nowrap;
+}
 
 .odkazy{list-style:none;margin:clamp(2rem,5vh,5rem) 0 0;padding:0;display:grid;gap:clamp(1.1rem,2.6vh,1.9rem);width:100%;max-width:60rem}
 /* velikost nese odkaz, ať mezera i posun šipky počítají se stejným em – šipka jen přijede blíž, nedotkne se */

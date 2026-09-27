@@ -187,6 +187,8 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 
 .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem 2rem;flex-wrap:wrap}
 .setkani{margin-left:auto;text-align:right}
+/* zkouška: emoji kráva před „dobytek“ – kreslí ji systém, nepřebarvuje se s pastvou */
+.kravicka{font-style:normal;line-height:1}
 .setkani .vtip{display:block;margin-top:.5em;font-family:var(--body);font-weight:400;font-size:clamp(1rem,1.55vw,1.875rem);line-height:1.3;letter-spacing:0}
 /* na úzkém displeji se setkání stejně zalomí pod kontakty – tam patří k levému okraji jako všechno ostatní */
 @media (max-width:900px){.setkani{flex-basis:100%;margin-left:0;text-align:left}}
@@ -258,7 +260,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
       <p class="kontakt">Máš dotaz? Napiš nám:<br><a href="mailto:ahoj@cirkevjakokrava.cz">ahoj@cirkevjakokrava.cz</a><br><a href="tel:+420608607585">Nebo zavolej</a></p>
       <p class="kontakt">Komunitní prostor v budově Monta<br><a href="https://mapy.cz/fnc/v1/search?query=Bohuslava%20Martin%C5%AF%201885%2F2%2C%20Nov%C3%BD%20Ji%C4%8D%C3%ADn">B. Martinů 1885/2, Nový Jičín</a><br>3. patro, na konci chodby</p>
     </div>
-    <p class="setkani">Setkání na pastvě<br>každou neděli v&nbsp;10.00<span class="vtip">Rádi tě poznáme. I když se cítíš jako dobytek.</span></p>
+    <p class="setkani">Setkání na pastvě<br>každou neděli v&nbsp;10.00<span class="vtip">Rádi tě poznáme. I když se cítíš jako <span class="kravicka" aria-hidden="true">🐄</span>&nbsp;dobytek.</span></p>
   </footer>
 
 </div>

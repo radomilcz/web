@@ -1,19 +1,21 @@
 # Církev jako kráva – hlavní web
 
 Zatím jen přistávací stránka „BRZY“ s odkazy na [manifest](https://manifest.cirkevjakokrava.cz),
-[otázky na tělo](https://otazky.cirkevjakokrava.cz) a kontaktem `ahoj@cirkevjakokrava.cz`.
+[otázky na tělo](https://otazky.cirkevjakokrava.cz), kontaktem `ahoj@cirkevjakokrava.cz` a adresou
+komunitního prostoru v budově Monta.
 
 **Živě:** https://cirkevjakokrava.cz (GitHub Pages z kořene větve `main`)
 
 Sourozenec repozitářů `cirkevjakokrava` (manifest) a `otazky` – stejné barvy (`#3b2f2f` / `#e6acac`),
-písmo Agrandir i otisk z Figmy.
+písmo Agrandir i otisk z Figmy. Terč v pravém horním rohu přepíná barvy stránky – stejných devět palet
+jako na otázkách na tělo (pravidla `:root[data-paleta]` v `index.html`, přepínání v `assets/paleta.js`).
 
 ## Struktura
 
 ```
-index.html              celá stránka, styly jsou uvnitř – žádný build
+index.html              celá stránka i s otiskem, styly jsou uvnitř – žádný build
 CNAME                   cirkevjakokrava.cz
-assets/otisk.svg        otisk („Group 14“ z Figmy, stejné křivky jako manifest)
+assets/paleta.js        volba barev – převzatá z otázek na tělo, volbu si pamatuje v localStorage
 assets/fonts/*.woff     Agrandir – subset (latinka, čeština, šipka)
 assets/favicon.svg      ikona webu (+ favicon-32.png, icon-180.png) – převzaté z manifestu
 assets/og.jpg           náhled při sdílení odkazu (1200×630, vyfocená stránka)

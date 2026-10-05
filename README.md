@@ -17,6 +17,10 @@ srovnal jas textu a pozadí. Výběr barvy střídání zastaví, vypínač „S
 pustí; volbu si stránka pamatuje jen do zavření okna (sessionStorage). S omezeným pohybem v systému
 se nestřídá, dokud si ho návštěvník sám nezapne.
 
+Otisk v pozadí neplyne s barvou textu: je ve dvou vrstvách s pevnou barvou a při změně palety se
+vrstvy prolnou průhledností (`assets/paleta.js`). Kdyby se 55 křivek přebarvovalo v každém snímku
+prolínání, stálo by to zhruba šestkrát víc výkonu a na velké obrazovce by stránka cukala.
+
 ## Struktura
 
 ```

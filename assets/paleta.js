@@ -48,7 +48,6 @@
     var volby = Array.prototype.slice.call(menu.querySelectorAll('button[data-paleta]'));
     var cekani;
 
-
     function oznac() {
       var ted = koren.dataset.paleta || volby[0].dataset.paleta;
       var stridani = koren.classList.contains('stridani');
@@ -77,9 +76,48 @@
       cekani = setTimeout(prohlizec, 2600);
     }
 
+    /* Otisk: dvě vrstvy s pevnou barvou (--c). Při změně palety dostane skrytá vrstva novou
+       barvu a vrstvy se prolnou průhledností – křivky se tak překreslí jen jednou, ne v každém
+       snímku. Při střídání se skrytá vrstva chystá na další barvu dopředu, takže ve chvíli
+       přechodu se už nekreslí nic. */
+    var vrstvy = Array.prototype.slice.call(document.querySelectorAll('.otisk .vrstva'));
+    var vidi = 0;                                      // která vrstva je zrovna vidět
+
+    function inkoust(nazev) {
+      var terc = menu.querySelector('button[data-paleta="' + nazev + '"] > .terc');
+      return terc ? terc.style.getPropertyValue('--s').trim() : '';
+    }
+
+    function aktualni() { return koren.dataset.paleta || volby[0].dataset.paleta; }
+
+    function otisk() {
+      var barva = inkoust(aktualni());
+      if (vrstvy[vidi].style.getPropertyValue('--c') === barva) { return; }
+      var skryta = 1 - vidi;
+      vrstvy[skryta].style.setProperty('--c', barva);
+      vrstvy[skryta].classList.add('vidi');
+      vrstvy[vidi].classList.remove('vidi');
+      vidi = skryta;
+    }
+
+    function pripravDalsi() {
+      var i = STRIDANI.indexOf(aktualni());
+      if (i < 0 || !koren.classList.contains('stridani')) { return; }
+      vrstvy[1 - vidi].style.setProperty('--c', inkoust(STRIDANI[(i + 1) % STRIDANI.length]));
+    }
+
+    if (vrstvy.length === 2) {
+      vrstvy[0].style.setProperty('--c', inkoust(aktualni()));
+      new MutationObserver(function () {
+        otisk();
+        setTimeout(pripravDalsi, 2600);                // až po prolnutí, ať se nekreslí během něj
+      }).observe(koren, { attributes: true, attributeFilter: ['data-paleta', 'class'] });
+      pripravDalsi();
+    }
+
     /* kroužek se obtočil → další barva v řadě */
     odpocet.addEventListener('animationiteration', function () {
-      var i = STRIDANI.indexOf(koren.dataset.paleta || STRIDANI[0]);
+      var i = STRIDANI.indexOf(aktualni());
       koren.dataset.paleta = STRIDANI[(i + 1) % STRIDANI.length];
       prohlizecPoProlnuti();
     });

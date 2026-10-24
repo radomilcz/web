@@ -25,12 +25,18 @@ prolínání, stálo by to zhruba šestkrát víc výkonu a na velké obrazovce 
 
 ```
 index.html              celá stránka i s otiskem, styly jsou uvnitř – žádný build
+pastva/index.html       Pastva – co chystáme a kdy se potkáváme (cirkevjakokrava.cz/pastva/), stejná hlava a patička
+assets/pastva.js        vykreslí Pastvu z veřejných dat Zvonce (zvonec.cirkevjakokrava.cz/public.json, jen to, co vedoucí pustili na web)
 CNAME                   cirkevjakokrava.cz
 assets/paleta.js        barvy pastvy – volba z otázek na tělo + samovolné střídání, volbu si pamatuje do zavření okna
 assets/fonts/*.woff     Agrandir – subset (latinka, čeština, šipka)
 assets/favicon.svg      ikona webu (+ favicon-32.png, icon-180.png) – převzaté z manifestu
 assets/og.jpg           náhled při sdílení odkazu (1200×630, vyfocená stránka)
 ```
+
+**Pastva** si data bere živě ze Zvonce: setkání se zapnutým „Ukaž na webu“, nahoře to, u kterého je zapnuté
+„Zvýrazni na webu“ („nenech si ujít“), pak jednorázové akce („co chystáme“) a pravidelná setkání („pravidelně“).
+Názvy, popisy a fotky se tedy mění ve Zvonci, ne tady.
 
 Texty se mění přímo v `index.html` (i ve webovém editoru GitHubu). Po uložení je změna do minuty venku.
 

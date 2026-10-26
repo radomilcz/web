@@ -7,7 +7,7 @@ komunitního prostoru v budově Monta v Novém Jičíně.
 **Živě:** https://cirkevjakokrava.cz (GitHub Pages z kořene větve `main`)
 
 Sourozenec repozitářů `cirkevjakokrava` (manifest) a `otazky` – stejné barvy (`#3b2f2f` / `#e6acac`),
-písmo Agrandir i otisk z Figmy. Terč v pravém horním rohu („Kráva mění barvy“) přepíná barvy pastvy – stejných devět palet
+písmo Agrandir, flek z Figmy. Terč v pravém horním rohu („Kráva mění barvy“) přepíná barvy pastvy – stejných devět palet
 jako na otázkách na tělo (pravidla `:root[data-paleta]` v `index.html`, přepínání v `assets/paleta.js`).
 
 Tady se pastva přebarvuje i sama: každá návštěva začíná se zapnutým střídáním – každých 12 s
@@ -17,16 +17,18 @@ srovnal jas textu a pozadí. Výběr barvy střídání zastaví, vypínač „S
 pustí; volbu si stránka pamatuje jen do zavření okna (sessionStorage). S omezeným pohybem v systému
 se nestřídá, dokud si ho návštěvník sám nezapne.
 
-Otisk v pozadí neplyne s barvou textu: je ve dvou vrstvách s pevnou barvou a při změně palety se
-vrstvy prolnou průhledností (`assets/paleta.js`). Kdyby se 55 křivek přebarvovalo v každém snímku
-prolínání, stálo by to zhruba šestkrát víc výkonu a na velké obrazovce by stránka cukala.
+V pozadí je flek z Figmy (stránka Fleky → Atlas fleků single, `mrak_01`) – zrnitý světlý mrak
+s průhledností. Barvu mu dává `mix-blend-mode: overlay` s pozadím, takže se při střídání palet
+přebarví sám a nic se nepřekresluje (dřívější otisk z 55 křivek se musel prolínat ve dvou vrstvách,
+jinak stránka při přechodu cukala). Na světlých paletách je flek jen velmi jemný – tak overlay funguje.
 
 ## Struktura
 
 ```
-index.html              celá stránka i s otiskem, styly jsou uvnitř – žádný build
+index.html              celá stránka, styly jsou uvnitř – žádný build
 CNAME                   cirkevjakokrava.cz
 assets/paleta.js        barvy pastvy – volba z otázek na tělo + samovolné střídání, volbu si pamatuje do zavření okna
+assets/flek.webp        flek mrak_01 z Figmy (1108×1197, bezztrátový WebP s průhledností)
 assets/fonts/*.woff     Agrandir – subset (latinka, čeština, šipka)
 assets/favicon.svg      ikona webu (+ favicon-32.png, icon-180.png) – převzaté z manifestu
 assets/og.jpg           náhled při sdílení odkazu (1200×630, vyfocená stránka)

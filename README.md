@@ -20,7 +20,8 @@ se nestřídá, dokud si ho návštěvník sám nezapne.
 V pozadí je flek z Figmy (stránka Fleky → Atlas fleků single, `mrak_01`) – zrnitý světlý mrak
 s průhledností. Barvu mu dává `mix-blend-mode: overlay` s pozadím, takže se při střídání palet
 přebarví sám a nic se nepřekresluje (dřívější otisk z 55 křivek se musel prolínat ve dvou vrstvách,
-jinak stránka při přechodu cukala). Na světlých paletách je flek jen velmi jemný – tak overlay funguje.
+jinak stránka při přechodu cukala). Na krémových paletách (vybírají se jen ručně) by se světlý flek
+rozpustil – tam se kreslí barvou písma na 70 %, stejně jako v manifestu a otázkách na tělo.
 
 ## Struktura
 

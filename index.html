@@ -93,6 +93,15 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
   .flek{width:520px;right:-55%;top:-4%;transform:none}
 }
 @keyframes flek{to{opacity:1}}
+.flek img{display:block;width:100%;height:auto}
+/* Krémové palety (vybírají se jen ručně terčem): světlý flek by se na nich rozpustil. Stejně jako
+   v manifestu a otázkách se tam flek kreslí barvou písma na 70 % – tvar dává maska z téhož obrázku. */
+:root[data-paleta^="krem-"] .flek{mix-blend-mode:normal}
+:root[data-paleta^="krem-"] .flek img{visibility:hidden}
+:root[data-paleta^="krem-"] .flek::before{
+  content:"";position:absolute;inset:0;background:var(--ink);opacity:.7;
+  -webkit-mask:var(--maska) center/100% 100% no-repeat;mask:var(--maska) center/100% 100% no-repeat;
+}
 .pozadi{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 
 .page{
@@ -230,7 +239,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2p
 <body>
 
 <div class="pozadi" aria-hidden="true">
-  <img class="flek" src="/assets/flek.webp" alt="" width="1108" height="1197">
+  <div class="flek" style="--maska:url(/assets/flek.webp)"><img src="/assets/flek.webp" alt="" width="1108" height="1197"></div>
 </div>
 
 <div class="page">
